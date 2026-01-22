@@ -2,45 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>lokiieo</title>
-
-  <!-- basic mobile sanity -->
+  <title>Command Prompt - lokiieo.github.io</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- vibes -->
   <style>
+    @font-face {
+      font-family: "RobotoMono";
+      src: url("font.ttf") format("truetype");
+    }
+
     body {
-      background: #0f0f14;
-      color: #e6e6eb;
-      font-family: system-ui, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background: #0b0b0d;
+      color: #00ff9c;
+      font-family: RobotoMono, monospace;
       margin: 0;
+      padding: 20px;
     }
 
-    .box {
-      text-align: center;
-      padding: 2rem;
-      border-radius: 12px;
-      background: #181820;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    .terminal {
+      max-width: 900px;
     }
 
-    h1 {
-      margin: 0 0 0.5rem;
+    .line {
+      white-space: pre-wrap;
     }
 
-    p {
-      opacity: 0.8;
+    .prompt::before {
+      content: "user:~$ ";
+      color: #00cfff;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ff9c;
+      margin-left: 2px;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>hi.</h1>
-    <p>you weren’t supposed to be here but welcome anyway</p>
+  <div class="terminal">
+    <div class="line">booting lokiieo.github.io...</div>
+    <div class="line">loading goobers... ██████████ done</div>
+    <br>
+    <div class="line prompt">hello.</div>
+    <div class="line prompt">type nothing. nothing happens.</div>
+    <div class="line prompt">this is intentional.</div>
+    <br>
+    <div class="line prompt">
+      <span class="cursor"></span>
+    </div>
   </div>
 </body>
 </html>
