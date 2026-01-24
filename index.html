@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Command Prompt - lokiieo.github.io</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    @font-face {
+      font-family: "RobotoMono";
+      src: url("font.ttf") format("truetype");
+    }
+
+    body {
+      background: #1b2a35;
+      color: #00ff9c;
+      font-family: RobotoMono, monospace;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .terminal {
+      max-width: 900px;
+    }
+
+    .line {
+      white-space: pre-wrap;
+    }
+
+    .link {
+      white-space: pre-wrap;
+      color: #00cfff;
+    }
+
+    .prompt::before {
+      content: "user:~$ ";
+      color: #00cfff;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ff9c;
+      margin-left: 2px;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="terminal" id="term">
+    <div class="line">booting lokiieo.github.io...</div>
+    <div class="line">loading goobers... ██████████ done</div>
+    <br>
+    <div class="line">hello.</div>
+    <div class="line">dunno why you're here but hi ig</div>
+    <div class="link"><a href="pong.exe" target="_blank" rel="noopener noreferrer">pong clone ig</a></div>
+    <br>
+    <div class="line prompt"></div>
+    </div>
+  </div>
