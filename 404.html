@@ -13,35 +13,130 @@
     }
 
     body {
-      background: #0a0505;
+      background: radial-gradient(ellipse at center, #1a0505 0%, #0a0505 70%);
       color: #ff5555;
       font-family: RobotoMono, monospace;
       margin: 0;
       padding: 20px;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    .terminal {
-      max-width: 900px;
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 0, 0, 0.45) 2px,
+        rgba(0, 0, 0, 0.45) 4px
+      );
+      background-size: 100% 4px;
+      pointer-events: none;
+      animation: scanMove 6s linear infinite;
+      z-index: 999;
     }
 
-    .link {
+    @keyframes scanMove {
+      0%   { background-position: 0 0; }
+      100% { background-position: 0 -40px; }
+    }
+
+    .terminal { max-width: 900px; }
+
+    .line, .link-line, .prompt-line {
       white-space: pre-wrap;
-      color: #00cfff;
+      min-height: 1.2em;
     }
-    .prompt::before {
+
+    .link-line { color: #00cfff; }
+    .link-line a { color: inherit; }
+
+    .prompt-line::before {
       content: "SYSTEM: ";
       color: #ff8888;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 0.6em;
+      height: 1em;
+      background: #ff5555;
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="terminal">
-    <div>error: page not found</div>
-    <div>error code: 404</div>
-	<div class="link"><a href="index.html">return to home page</a></div>
-    <br>
-    <div class="prompt">this page dont exist bruh.</div>
-    <div class="prompt">ok bye</div>
-  </div>
+  <div class="terminal" id="term"></div>
+
+  <script>
+    const term = document.getElementById('term');
+
+    const lines = [
+      { text: 'error: page not found' },
+      { text: 'error code: 404' },
+      { text: 'return to home page', cls: 'link-line', href: 'index.html' },
+      { text: '' },
+      { text: 'this page dont exist bruh.', cls: 'prompt-line' },
+      { text: 'ok bye', cls: 'prompt-line' },
+    ];
+
+    const SPEED = 40;
+
+    function sleep(ms) {
+      return new Promise(r => setTimeout(r, ms));
+    }
+
+    async function typeLine(lineObj) {
+      const el = document.createElement('div');
+      el.className = lineObj.cls || 'line';
+      term.appendChild(el);
+
+      if (!lineObj.text) {
+        el.innerHTML = '<br>';
+        return;
+      }
+
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      el.appendChild(cursor);
+
+      let typed = '';
+      for (const ch of lineObj.text) {
+        typed += ch;
+
+        if (lineObj.href) {
+          el.innerHTML = `<a href="${lineObj.href}">${typed}</a>`;
+        } else {
+          el.textContent = typed;
+        }
+
+        el.appendChild(cursor);
+        await sleep(SPEED);
+      }
+
+      cursor.remove();
+    }
+
+    async function run() {
+      for (const line of lines) {
+        await typeLine(line);
+        await sleep(120);
+      }
+    }
+
+    run();
+  </script>
 </body>
 </html>
